@@ -27,6 +27,3 @@ print "VIX is " + str(vix)
 print "STD deviation is " + str(std_dev)
 print "STD deviation / 2 is " + str(std_dev/2)
 print "STD deviation / 4 is " + str(std_dev/4)
-
-print "SPX + 1/2STD is " + str(spx + std_dev/2)
-print "SPX - 1/2STD is " + str(spx - std_dev/2)
