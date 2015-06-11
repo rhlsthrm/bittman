@@ -8,13 +8,13 @@ r = requests.get(q)
 # print r.status_code
 # print r.headers
 # print r.content
-
+string = ""
 data = json.loads(r.content)
 quotes = data['query']['results']['quote']
 # print quotes
 for quote in quotes:
-	print quote['symbol']
-	print quote['LastTradePriceOnly']
+	string += quote['symbol'] + "\n"
+	string += quote['LastTradePriceOnly'] + "\n"
 
 	if quote['symbol'] == '^SPX':
 		spx = float(quote['LastTradePriceOnly'])
@@ -22,8 +22,16 @@ for quote in quotes:
 		vix = float(quote['LastTradePriceOnly'])
 
 std_dev = spx * vix/100. * math.sqrt(7/252.0)
-print "SPX is " + str(spx)
-print "VIX is " + str(vix)
-print "STD deviation is " + str(std_dev)
-print "STD deviation / 2 is " + str(std_dev/2)
-print "STD deviation / 4 is " + str(std_dev/4)
+string += "SPX is " + str(spx) + "\n"
+string += "VIX is " + str(vix) + "\n"
+string += "STD deviation is " + str(std_dev) + "\n"
+string += "STD deviation / 2 is " + str(std_dev/2) + "\n"
+string += "STD deviation / 4 is " + str(std_dev/4)
+
+print string
+
+bitt = {'stddev': std_dev, 'stddev2': std_dev/2, 'stddev4': std_dev/4}
+print json.dumps(bitt)
+
+with open('morning.json', 'wb') as outfile:
+	json.dump(bitt, outfile)
