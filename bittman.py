@@ -31,7 +31,6 @@ string += "STD deviation / 4 is " + str(std_dev/4)
 print string
 
 bitt = {'stddev': std_dev, 'stddev2': std_dev/2, 'stddev4': std_dev/4}
-print json.dumps(bitt)
 
 with open('morning.json', 'wb') as outfile:
 	json.dump(bitt, outfile)
