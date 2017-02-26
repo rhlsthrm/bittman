@@ -28,6 +28,14 @@ functions:
     events:
       - http: GET calculate
 
+  calculateTriggers:
+    handler: calculateTriggers/handler.calculate
+    include:
+      - calculateTriggers/**
+      - node_modules
+    events:
+      - http: GET triggers
+
 resources:
   Resources:
     TodosDynamoDbTable:

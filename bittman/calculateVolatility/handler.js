@@ -2,8 +2,6 @@
 
 const AWS = require('aws-sdk');
 const CalculateVolatility = require('./calculateVolatility');
-const $db = new AWS.DynamoDB();
-const DynamoDB = require('aws-dynamodb')($db);
 const table = process.env.DYNAMODB_TABLE;
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
@@ -12,7 +10,7 @@ module.exports.calculate = (event, context, callback) => {
     const calculateVolatility = new CalculateVolatility();
     calculateVolatility.calculateStdDev()
         .then(data => {
-            const deleteParams = {
+            let deleteParams = {
                 TableName: table,
                 Key: { id: 'stdDev' }
             }
@@ -37,6 +35,16 @@ module.exports.calculate = (event, context, callback) => {
                     };
                     callback(null, response);
                 });
+            });
+            deleteParams = {
+                TableName: table,
+                Key: { id: 'triggers' }
+            }
+            dynamoDb.delete(deleteParams, (err, result) => {
+                if (err) {
+                    callback(err);
+                    return;
+                }
             });
         })
         .catch(callback)

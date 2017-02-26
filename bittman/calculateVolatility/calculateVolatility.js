@@ -3,10 +3,6 @@
 const rp = require('request-promise');
 
 class CalculateVolatility {
-    constructor() {
-        this.db = null;
-    }
-
     /**
      * Calculate standard deviation based on the Bittman algorithm.
      */
