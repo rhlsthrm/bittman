@@ -16,14 +16,12 @@ module.exports.calculate = (event, context, callback) => {
         })
         .catch(callback)
         .then(data => {
-            return calculateVolatility.calculateStdDev()
+            return calculateVolatility.calculateStdDev();
         })
         .catch(callback)
         .then(data => {
-            console.log(data);
             const insertData = Object.assign(data, { id: 'stdDev', createdAt: Date.now() });
-            console.log(insertData);
-            return dynamo.put(insertData)
+            return dynamo.put(insertData);
         })
         .catch(callback)
         .then(data => {

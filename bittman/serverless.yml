@@ -27,6 +27,7 @@ functions:
       - node_modules
     events:
       - http: GET calculate
+      - schedule: cron(30 21 * * WED *)
 
   calculateTriggers:
     handler: calculateTriggers/handler.calculate
@@ -35,6 +36,7 @@ functions:
       - node_modules
     events:
       - http: GET triggers
+      - schedule: cron(31 14 * * THU *)
 
 resources:
   Resources:
