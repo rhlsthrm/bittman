@@ -6,7 +6,6 @@ class CalculateTriggers {
     calculate(stdDev) {
         // url to query Yahoo Finance API for SPX and VIX
         const url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quote%20where%20symbol%20in%20(%22%5ESPX%22%2C%22%5EVIX%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback='
-
         const options = {
             uri: url,
             headers: {
@@ -36,10 +35,24 @@ class CalculateTriggers {
                     stdDev: stdDev
                 });
             })
-            .catch(err => {
-                reject(err);
-            });
-        })
+            .catch(reject);
+        });
+    }
+    sendEmail(mailgun, sendAddresses, emailParams) {
+        if (!sendAddresses) return;
+        const recepients = sendAddresses.join(',');
+        const data = {
+            from: 'Serverless <serverless@no-reply.com>',
+            to: recepients,
+            subject: 'Bittman triggers',
+            text: `Triggers calculated:
+SPX Open: ${emailParams.spxOpen}
+SPX Trigger Point Low: ${emailParams.triggerLow}
+SPX Trigger Point High: ${emailParams.triggerHigh}
+SPX Spread Point Low: ${emailParams.spreadLow}
+SPX Spread Point High: ${emailParams.spreadHigh}`
+        }
+        return mailgun.messages().send(data);
     }
 }
 

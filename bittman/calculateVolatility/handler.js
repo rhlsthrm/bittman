@@ -29,7 +29,6 @@ module.exports.calculate = (event, context, callback) => {
                 statusCode: 200,
                 body: JSON.stringify({
                     message: 'Successfully updated DynamoDB with std dev values',
-                    input: event,
                 }),
             };
             callback(null, response);

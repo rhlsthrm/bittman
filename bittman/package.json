@@ -11,6 +11,7 @@
   "dependencies": {
     "aws-dynamodb": "^0.1.64",
     "aws-sdk": "^2.20.0",
+    "mailgun-js": "^0.8.2",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
   }
