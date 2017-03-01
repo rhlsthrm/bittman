@@ -40,7 +40,7 @@ functions:
 
 resources:
   Resources:
-    TodosDynamoDbTable:
+    BittmanDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:

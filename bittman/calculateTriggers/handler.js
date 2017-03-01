@@ -19,16 +19,16 @@ module.exports.calculate = (event, context, callback) => {
     })
     .catch(callback)
     .then(data => {
+        const mailgun = new Mailgun({apiKey: config.mailgun.apiKey, domain: config.mailgun.domain});
+        calculateTriggers.sendEmail(mailgun, config.emails, data);
         const item = Object.assign(data, { id: 'triggers', createdAt: Date.now() });
         return dynamo.put(item);
     })
     .catch(callback)
     .then(data => {
-        const mailgun = new Mailgun({apiKey: config.mailgun.apiKey, domain: config.mailgun.domain});
-        calculateTriggers.sendEmail(mailgun, config.emails, data);
         const response = {
             statusCode: 200,
-            body: JSON.stringify({ message: data })
+            body: JSON.stringify({ message: 'Calculated triggers.' })
         };
         callback(null, response);
     })
