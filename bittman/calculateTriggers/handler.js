@@ -17,14 +17,12 @@ module.exports.calculate = (event, context, callback) => {
     .then(data => {
         return calculateTriggers.calculate(data.stdDev);
     })
-    .catch(callback)
     .then(data => {
         const mailgun = new Mailgun({apiKey: config.mailgun.apiKey, domain: config.mailgun.domain});
         calculateTriggers.sendEmail(mailgun, config.emails, data);
         const item = Object.assign(data, { id: 'triggers', createdAt: Date.now() });
         return dynamo.put(item);
     })
-    .catch(callback)
     .then(data => {
         const response = {
             statusCode: 200,

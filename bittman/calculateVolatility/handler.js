@@ -14,16 +14,13 @@ module.exports.calculate = (event, context, callback) => {
         .then(data => {
             return dynamo.delete({ id: 'triggers' });
         })
-        .catch(callback)
         .then(data => {
             return calculateVolatility.calculateStdDev();
         })
-        .catch(callback)
         .then(data => {
             const insertData = Object.assign(data, { id: 'stdDev', createdAt: Date.now() });
             return dynamo.put(insertData);
         })
-        .catch(callback)
         .then(data => {
             const response = {
                 statusCode: 200,
@@ -32,5 +29,6 @@ module.exports.calculate = (event, context, callback) => {
                 }),
             };
             callback(null, response);
-        });
+        })
+        .catch(callback);
 };
