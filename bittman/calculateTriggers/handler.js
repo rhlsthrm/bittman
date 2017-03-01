@@ -12,15 +12,18 @@ const Mailgun = require('mailgun-js');
 module.exports.calculate = (event, context, callback) => {
     const dynamo = new Dynamo(dynamoDb, table);
     const calculateTriggers = new CalculateTriggers;
-
+    let triggers;
     dynamo.get({ id: 'stdDev' })
     .then(data => {
         return calculateTriggers.calculate(data.stdDev);
     })
     .then(data => {
+        triggers = data;
         const mailgun = new Mailgun({apiKey: config.mailgun.apiKey, domain: config.mailgun.domain});
-        calculateTriggers.sendEmail(mailgun, config.emails, data);
-        const item = Object.assign(data, { id: 'triggers', createdAt: Date.now() });
+        return calculateTriggers.sendEmail(mailgun, config.emails, data);
+    })
+    .then(data => {
+        const item = Object.assign(triggers, { id: 'triggers', createdAt: Date.now() });
         return dynamo.put(item);
     })
     .then(data => {
