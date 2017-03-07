@@ -9,22 +9,24 @@ This project implements the algorithm using the Serverless framework and sends e
 
 ## Prerequisites
 * Serverless (please see https://serverless.com/) for AWS setup instructions.
+
 `$ npm install serverless -g`
 * Mailgun account (https://www.mailgun.com/)
 
 ## Configuration
 The project requires an active [Mailgun](https://www.mailgun.com/) account to send emails. Insert your mailgun API key and domain into the configuration file `common/config.js`. Also you will insert email addresses here.
 
-
-```const config = {}
+```
+const config = {};
 config.mailgun = {
     apiKey: 'key-xxxxxxxxxx',
     domain: 'sandboxxxxxxxxxx.mailgun.org'
 };
 config.emails = [
     'Rahul <rahul@sethuram.com>'
-]
-module.exports = config;```
+];
+module.exports = config;
+```
 
 
 ## Deployment
