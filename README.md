@@ -15,6 +15,7 @@ This project implements the algorithm using the Serverless framework and sends e
 ## Configuration
 The project requires an active [Mailgun](https://www.mailgun.com/) account to send emails. Insert your mailgun API key and domain into the configuration file `common/config.js`. Also you will insert email addresses here.
 
+
 ```const config = {}
 config.mailgun = {
     apiKey: 'key-xxxxxxxxxx',
@@ -25,17 +26,21 @@ config.emails = [
 ]
 module.exports = config;```
 
+
 ## Deployment
 First, install the npm dependencies:
+
 `$ npm install`
 
 Deploy the functions to AWS:
+
 `$ sls deploy`
 
 The functions have GET endpoints tied to them just so they can be tested, but the functions are meant to be run on the schedule provided.
 
 ## Debugging
 To debug serverless functions, you can use the following command:
+
 `$ sls logs -f <FUNCTION_NAME> -t`
 
 This will give a tailing log output of the function and provides stack traces of errors.
